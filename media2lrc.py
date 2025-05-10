@@ -5,20 +5,17 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 import os
 from transcriber import transcribe_media_to_lrc
-from whisper import load_whisper_model
-from utils import log
+from openaiwhisper import load_whisper_model
+from utils import log, validate_media_folder
 
 def main():
     media_search_folder = "./media"  # Media folder
     model_name = "small"  # Available models: tiny, small, medium, large
-    abs_media_search_folder = os.path.abspath(media_search_folder)
 
-    if not os.path.isdir(abs_media_search_folder):
-        log(f"Error: Folder {abs_media_search_folder} not found.")
+    # Validate media folder
+    abs_media_search_folder = validate_media_folder(media_search_folder)
+    if not abs_media_search_folder:
         return
-    
-    # Some preliminary checks before loading the model
-    # check if the folder contains any files or subfolders
 
     # Load model
     model = load_whisper_model(model_name)
