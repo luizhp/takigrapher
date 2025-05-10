@@ -4,10 +4,9 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 import os
-import whisper  # openai-whisper
 from transcriber import transcribe_media_to_lrc
+from whisper import load_whisper_model
 from utils import log
-
 
 def main():
     media_search_folder = "./media"  # Media folder
@@ -17,16 +16,13 @@ def main():
     if not os.path.isdir(abs_media_search_folder):
         log(f"Error: Folder {abs_media_search_folder} not found.")
         return
+    
+    # Some preliminary checks before loading the model
+    # check if the folder contains any files or subfolders
 
-    log("Loading Whisper model (it can take some time)")
-    try:
-        import torch
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        log(f"Using device: {'gpu' if device == 'cuda' else device}")
-        # Load the Whisper model
-        model = whisper.load_model(model_name, device=device)
-    except Exception as e:
-        log(f"Error: Whisper model load failed: {e}")
+    # Load model
+    model = load_whisper_model(model_name)
+    if model is None:
         return
 
     log(f"Model loaded. Searching for media files in {abs_media_search_folder} and subfolders")
