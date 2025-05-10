@@ -6,7 +6,6 @@ def load_whisper_model(model_name: str):
     Loads the Whisper model with the appropriate device (GPU if available, else CPU).
     Returns the loaded model or None if loading fails.
     """
-    log("Loading Whisper model (it can take some time)")
     try:
         import torch
         device = "cuda" if torch.cuda.is_available() else "cpu"
