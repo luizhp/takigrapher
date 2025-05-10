@@ -34,3 +34,19 @@ def validate_media_folder(folder_path):
 
     log(f"Error: No supported media files found in {abs_folder}.")
     return None
+
+def list_media_files(folder_path):
+    """
+    Returns a list of absolute paths to supported media files found recursively in the given folder.
+    """
+    supported_exts = (
+        ".mp3", ".wav", ".m4a", ".flac", ".aac", ".ogg", ".wma",
+        ".mp4", ".mkv", ".webm", ".opus", ".mov", ".avi"
+    )
+    abs_folder = os.path.abspath(folder_path)
+    media_files = []
+    for root, _, files in os.walk(abs_folder):
+        for file in files:
+            if file.lower().endswith(supported_exts):
+                media_files.append(os.path.join(root, file))
+    return media_files
