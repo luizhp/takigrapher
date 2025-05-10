@@ -1,0 +1,30 @@
+# Byte-compiled / cache / temp files
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários de áudio
+*.wav
+
+# Arquivos de saída gerados
+*.lrc
+
+# Ambiente virtual
+venv/
+.env/
+.env
+
+# Configurações de IDE
+.vscode/
+.idea/
+
+media/
