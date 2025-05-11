@@ -6,10 +6,10 @@ def parse_args_and_build_config():
     parser = argparse.ArgumentParser(
         description="Transcribe media files to LRC using Whisper",
         formatter_class=argparse.RawTextHelpFormatter,
-        usage="python3 media2lrc.py [options]",
-        prog="media2lrc.py",
+        usage="python3 takigrapher.py [options]",
+        prog="takigrapher.py",
         epilog="""Example usage:
-python3 media2lrc.py --media ./media --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en
+python3 takigrapher.py --media ./media --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en
         """,
         allow_abbrev=True,
         add_help=True

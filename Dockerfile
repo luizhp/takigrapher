@@ -8,16 +8,16 @@ RUN apt-get update && \
 # Install Whisper and torch (with CUDA support)
 RUN pip3 install --upgrade pip && \
     pip3 install torch --index-url https://download.pytorch.org/whl/cu121 && \
-    pip3 install git+https://github.com/openai/whisper.git
+    pip3 install openai-whisper
 
 # Creates work directory
 WORKDIR /app
 
 # Copy the script to the container
-COPY media2lrc.py .
+COPY *.py .
 
 # Creates directory for media files (can be overridden by volume)
 RUN mkdir /app/media
 
 # Default command: runs the script
-ENTRYPOINT ["python3", "media2lrc.py"]
+ENTRYPOINT ["python3", "takigrapher.py"]
