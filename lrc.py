@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 def format_time_lrc(seconds: float) -> str:
     """Converts seconds to LRC format [mm:ss.xx]"""
     if seconds is None:

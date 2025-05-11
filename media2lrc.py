@@ -21,16 +21,16 @@ def main():
         return
 
     # Search media files
-    log(f"Searching for media files in {config.media_search_folder_abs()} and subfolders")
-    config.media_files = list_media_files(config.media_search_folder_abs())
+    log(f"Searching for media in {config.media_search_folder}")
+    config.media_files = list_media_files(config.media_search_folder)
     if not config.media_files:
-        log(f"No media files found in {config.media_search_folder_abs()}")
+        log(f"No media files found in {config.media_search_folder}")
         return
     log(f"Found {len(config.media_files)} media files")
 
     # Load model
     log("Loading Whisper model (it can take some time)")
-    config.model = load_whisper_model(config.model_name)
+    config.model = load_whisper_model(config)
     if config.model is None:
         log(f"Failed to load model: {config.model_name}")
         return
@@ -38,7 +38,7 @@ def main():
 
     # Transcribe media files
     for media_file_path in config.media_files:
-        transcribe_media_to_lrc(media_file_path, config.model)
+        transcribe_media_to_lrc(config, media_file_path)
 
     log("Done")
 

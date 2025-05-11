@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import argparse
 import whisper
 from TranscriptionConfig import TranscriptionConfig
@@ -52,15 +51,15 @@ large-v1, large-v2, large-v3: variants like""",
                          required=False, 
                          type=str, 
                          choices=["cpu", "cuda"], 
-                         help="available devices: cpu or cuda. (Default: cpu)",
-                         default="cpu")
+                         help="available devices: cpu or cuda",
+                         default=None)
 
     parser.add_argument("-v", "--verbose",
                         dest="verbose",
                         action="store_true",
                         required=False,
-                        help="activate verbose mode.",
-                        default=False)
+                        help="activate verbose mode",
+                        default=None)
 
     parser.add_argument("-st", "--sourcetype", 
                         dest="sourcetype",

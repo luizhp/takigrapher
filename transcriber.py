@@ -1,29 +1,32 @@
-#!/usr/bin/env python3
 import os
-import openaiwhisper  # openai-whisper
+from TranscriptionConfig import TranscriptionConfig
 from lrc import format_time_lrc, build_lrc_content_from_segments
 from utils import log
 
-def transcribe_media_to_lrc(media_file_path: str, model: openaiwhisper.whisper.Whisper):
+def transcribe_media_to_lrc(config : TranscriptionConfig, media_file_path: str):
     """
     Transcribes a media file to LRC format using Whisper.
     The LRC file will be saved in the same directory as the media file, with the same base name.
     Lines are divided based on pauses between words to follow the musical phrase.
     """
-    base_filename = os.path.basename(media_file_path)
-    lrc_filename = os.path.splitext(base_filename)[0] + ".lrc"
-    lrc_file_path_alongside_media = os.path.splitext(media_file_path)[0] + ".lrc"
-
+    # Input media file
     abs_media_file_path = os.path.abspath(media_file_path)
+    # Output transcribed file
+    lrc_file_path_alongside_media = os.path.splitext(media_file_path)[0] + ".lrc"
     abs_lrc_file_path = os.path.abspath(lrc_file_path_alongside_media)
 
     log(f"Transcribing {abs_media_file_path} to {abs_lrc_file_path}")
 
     try:
-        verboseTranscription = False
-        if verboseTranscription: print("\n---")
-        result = model.transcribe(audio=abs_media_file_path, verbose=verboseTranscription, word_timestamps=True)
-        if verboseTranscription: print("\n---")
+        if config.verbose: print("")
+        result = config.model.transcribe(audio=abs_media_file_path,
+                                         verbose=config.verbose,
+                                         word_timestamps=True)
+        # result = config.model.transcribe(audio=abs_media_file_path,
+        #                                  language=config.sourcelanguage,
+        #                                  task=config.targettype,
+        #                                  word_timestamps=True)
+        if config.verbose: print("")
 
         transcribe_content = []
         PAUSE_THRESHOLD = 0.25  # Shorter pause for more line breaks
