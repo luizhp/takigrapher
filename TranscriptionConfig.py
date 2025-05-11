@@ -5,9 +5,9 @@ import os
 class TranscriptionConfig:
     device: str = None
     verbose: bool = None
-    sourcetype: str = "all"
-    sourcelanguage: str = "en"
-    targetlanguage: str = "en"
+    sourcetype: str = None
+    sourcelanguage: str = None
+    targetlanguage: str = None
     targettype: str = "lrc"
     targetexists: str = "skip"
     targetsuffix: bool = True

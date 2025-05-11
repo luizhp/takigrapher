@@ -8,11 +8,13 @@ def format_time_lrc(seconds: float) -> str:
     centiseconds = int((remaining_seconds - secs) * 100)
     return f"[{minutes:02d}:{secs:02d}.{centiseconds:02d}]"
 
-def build_lrc_content_from_segments(segments, pause_threshold=0.25, max_words_per_line=7):
+def build_lrc_content_from_segments(segments):
     """
     Build LRC content lines from Whisper segments.
     Returns a list of LRC lines.
     """
+    PAUSE_THRESHOLD = 0.25  # Shorter pause for more line breaks
+    MAX_WORDS_PER_LINE = 7  # Maximum words per line
     lrc_content = []
     for segment in segments:
         if not segment.get('words'):
@@ -48,7 +50,7 @@ def build_lrc_content_from_segments(segments, pause_threshold=0.25, max_words_pe
             else:
                 if previous_word_end_time is not None:
                     pause_duration = word_start_time - previous_word_end_time
-                    if pause_duration > pause_threshold or len(current_line_words) >= max_words_per_line:
+                    if pause_duration > PAUSE_THRESHOLD or len(current_line_words) >= MAX_WORDS_PER_LINE:
                         lrc_line = f"{format_time_lrc(current_line_start_time)}{' '.join(current_line_words)}"
                         lrc_content.append(lrc_line)
                         current_line_words = [word_text]

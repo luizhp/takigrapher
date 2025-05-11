@@ -19,10 +19,12 @@ def main():
     if config is None:
         log("Failed to parse command line arguments")
         return
-
+    
     # Search media files
     log(f"Searching for media in {config.media_search_folder}")
-    config.media_files = list_media_files(config.media_search_folder)
+    if config.sourcetype is not None:
+        log(f"Only searching for {config.sourcetype} files")    
+    config.media_files = list_media_files(config.media_search_folder, config.sourcetype)
     if not config.media_files:
         log(f"No media files found in {config.media_search_folder}")
         return

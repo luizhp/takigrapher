@@ -104,8 +104,8 @@ large-v1, large-v2, large-v3: variants like""",
                         nargs="?",
                         required=False,
                         type=str,
-                        choices=["lrc", "txt", "srt", "vtt"],
-                        help="available types: lrc, txt, srt, vtt. (Default: lrc)",
+                        choices=["lrc", "txt", "srt", "vtt", "json"],
+                        help="available types: lrc, txt, srt, json, vtt. (Default: lrc)",
                         default="lrc")
 
     parser.add_argument("-te","--targetexists",

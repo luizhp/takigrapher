@@ -12,7 +12,7 @@ def log(message: str, *args, **kwargs):
     print(f"[{timestamp}] {formatted}", **kwargs, file=sys.stdout)
 
 
-def list_media_files(folder_path):
+def list_media_files(folder_path: str, sourcetype: str = None) -> list:
     """
     Returns a list of absolute paths to supported media files found recursively in the given folder.
     """
@@ -20,6 +20,9 @@ def list_media_files(folder_path):
         ".mp3", ".wav", ".m4a", ".flac", ".aac", ".ogg", ".wma",
         ".mp4", ".mkv", ".webm", ".opus", ".mov", ".avi"
     )
+    if sourcetype:
+        supported_exts = tuple(f".{sourcetype.lower()}")
+
     abs_folder = os.path.abspath(folder_path)
     media_files = []
 
