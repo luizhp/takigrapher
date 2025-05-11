@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import suppress_warnings
 import os
-from transcriber import transcribe_media_to_lrc
+from transcriber import transcribe_media
 from openaiwhisper import load_whisper_model
 from utils import log, list_media_files
 from cli_args import parse_args_and_build_config
@@ -40,7 +40,7 @@ def main():
 
     # Transcribe media files
     for media_file_path in config.media_files:
-        transcribe_media_to_lrc(config, media_file_path)
+        transcribe_media(config, media_file_path)
 
     log("Done")
 

@@ -123,8 +123,8 @@ large-v1, large-v2, large-v3: variants like""",
                         dest="targetsuffix",
                         action="store_true",
                         required=False,
-                        help="add suffix to target file name. (Default: true)",
-                        default=True)
+                        help="add suffix to target file name. (Default: false)",
+                        default=False)
 
     args = parser.parse_args()
 
