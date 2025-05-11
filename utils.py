@@ -23,6 +23,20 @@ def list_media_files(folder_path):
     )
     abs_folder = os.path.abspath(folder_path)
     media_files = []
+
+    # Check if the folder is a file
+    if os.path.isfile(abs_folder):
+        log(f"Path is a file, not a folder: {abs_folder}")
+        if abs_folder.lower().endswith(supported_exts):
+            media_files.append(abs_folder)
+        else:
+            log(f"File is not a supported media file: {abs_folder}")
+        return media_files
+
+    # Check if the folder exists
+    if not os.path.exists(abs_folder):
+        log(f"Folder does not exist: {abs_folder}")
+        return media_files
     for root, _, files in os.walk(abs_folder):
         for file in files:
             if file.lower().endswith(supported_exts):
