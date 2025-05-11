@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import whisper  # openai-whisper
 from utils import log
 
