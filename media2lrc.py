@@ -38,7 +38,7 @@ def main():
 
     # Transcribe media files
     for media_file_path in config.media_files:
-        transcribe_media_to_lrc(media_file_path, config.model, os.path.dirname(media_file_path))
+        transcribe_media_to_lrc(media_file_path, config.model)
 
     log("Done")
 

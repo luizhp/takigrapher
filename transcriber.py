@@ -4,7 +4,7 @@ import openaiwhisper  # openai-whisper
 from lrc import format_time_lrc, build_lrc_content_from_segments
 from utils import log
 
-def transcribe_media_to_lrc(media_file_path: str, model: openaiwhisper.whisper.Whisper, output_dir: str):
+def transcribe_media_to_lrc(media_file_path: str, model: openaiwhisper.whisper.Whisper):
     """
     Transcribes a media file to LRC format using Whisper.
     The LRC file will be saved in the same directory as the media file, with the same base name.
