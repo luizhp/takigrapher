@@ -10,7 +10,7 @@ class TranscriptionConfig:
     sourcelanguage: str = "en"
     targetlanguage: str = "en"
     targettype: str = "lrc"
-    targetexists: str = "overwrite"
+    targetexists: str = "skip"
     targetsuffix: bool = True
     media_search_folder: str = "./media"
     model_name: str = "tiny"

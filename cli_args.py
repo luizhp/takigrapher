@@ -116,8 +116,8 @@ large-v1, large-v2, large-v3: variants like""",
                          nargs="?",
                          required=False,
                          type=str,
-                         choices=["overwrite", "append", "skip", "rename"],
-                         help="available actions: overwrite, append, skip, rename. (Default: skip)",
+                         choices=["overwrite", "skip", "rename"],
+                         help="available actions: overwrite, skip, rename. (Default: skip)",
                          default="skip")
 
     parser.add_argument("-ts","--targetsuffix",
