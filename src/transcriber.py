@@ -1,7 +1,11 @@
 import os
+from utils import log
 from TranscriptionConfig import TranscriptionConfig
 from transformers.lrc import segments2lrc
-from utils import log
+from transformers.srt import segments2srt
+from transformers.vtt import segments2vtt
+from transformers.json import segments2json
+from transformers.txt import segments2txt
 
 def transcribe_media(config : TranscriptionConfig, media_file_path: str):
     """
@@ -66,26 +70,22 @@ def transcribe_media(config : TranscriptionConfig, media_file_path: str):
           case 'lrc':
               transcribe_content = segments2lrc(result['segments'])
           case 'txt':
-              log("WARNING: txt format not supported yet")
-              pass
+              transcribe_content = segments2txt(result['segments'])
           case 'srt':
-              log("WARNING: srt format not supported yet")
-              pass
+              transcribe_content = segments2srt(result['segments'])
           case 'vtt':
-              log("WARNING: vtt format not supported yet")
-              pass
+              transcribe_content = segments2vtt(result['segments'])
           case 'json':
-              log("WARNING: json format not supported yet")
-              pass
+              transcribe_content = segments2json(result['segments'])
 
     if transcribe_content == []:
-        log(f"ERROR: Transcription failed {abs_media_file_path}: no segments found")
+        log(f"ERROR: Transcription could not be converted to {config.targettype}: no segments found")
         return
 
     # Output the transcription to a file
     log("Writing to file...")
     with open(abs_lrc_file_path, 'w', encoding='utf-8') as f:
         for line in transcribe_content:
-            f.write(line + "\n")
+            f.write(line)
 
     log(f"Transcription done: {abs_lrc_file_path}")

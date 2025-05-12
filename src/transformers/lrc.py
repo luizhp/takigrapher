@@ -22,7 +22,7 @@ def segments2lrc(segments):
                 start_time = segment['start']
                 text = segment['text'].strip()
                 lrc_line = f"{format_time_lrc(start_time)}{text}"
-                lrc_content.append(lrc_line)
+                lrc_content.append(f"{lrc_line}\n")
             continue
 
         current_line_words = []
@@ -52,7 +52,7 @@ def segments2lrc(segments):
                     pause_duration = word_start_time - previous_word_end_time
                     if pause_duration > PAUSE_THRESHOLD or len(current_line_words) >= MAX_WORDS_PER_LINE:
                         lrc_line = f"{format_time_lrc(current_line_start_time)}{' '.join(current_line_words)}"
-                        lrc_content.append(lrc_line)
+                        lrc_content.append(f"{lrc_line}\n")
                         current_line_words = [word_text]
                         current_line_start_time = word_start_time
                     else:
@@ -64,5 +64,5 @@ def segments2lrc(segments):
 
         if current_line_words and current_line_start_time is not None:
             lrc_line = f"{format_time_lrc(current_line_start_time)}{' '.join(current_line_words)}"
-            lrc_content.append(lrc_line)
+            lrc_content.append(f"{lrc_line}\n")
     return lrc_content
