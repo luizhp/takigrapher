@@ -8,7 +8,7 @@ def format_time_lrc(seconds: float) -> str:
     centiseconds = int((remaining_seconds - secs) * 100)
     return f"[{minutes:02d}:{secs:02d}.{centiseconds:02d}]"
 
-def build_lrc_content_from_segments(segments):
+def segments2lrc(segments):
     """
     Build LRC content lines from Whisper segments.
     Returns a list of LRC lines.

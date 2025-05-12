@@ -1,6 +1,6 @@
 import os
 from TranscriptionConfig import TranscriptionConfig
-from lrc import format_time_lrc, build_lrc_content_from_segments
+from transformers.lrc import segments2lrc
 from utils import log
 
 def transcribe_media(config : TranscriptionConfig, media_file_path: str):
@@ -64,7 +64,7 @@ def transcribe_media(config : TranscriptionConfig, media_file_path: str):
     if 'segments' in result:
       match config.targettype:
           case 'lrc':
-              transcribe_content = build_lrc_content_from_segments(result['segments'])
+              transcribe_content = segments2lrc(result['segments'])
           case 'txt':
               log("WARNING: txt format not supported yet")
               pass
