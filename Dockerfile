@@ -20,6 +20,7 @@ COPY README.md ./
 
 # Creates directory for media files (can be overridden by volume)
 RUN mkdir -p /app/media
+COPY media/sample.mp3 ./media/
 
 # Installs Python dependencies
 RUN if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
