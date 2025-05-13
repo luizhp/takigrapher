@@ -14,10 +14,15 @@ RUN pip3 install --upgrade pip && \
 WORKDIR /app
 
 # Copy the script to the container
-COPY *.py .
+COPY src/ ./src/
+COPY requirements.txt ./
+COPY README.md ./
 
 # Creates directory for media files (can be overridden by volume)
-RUN mkdir /app/media
+RUN mkdir -p /app/media
 
-# Default command: runs the script
-ENTRYPOINT ["python3", "takigrapher.py"]
+# Installs Python dependencies
+RUN if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+
+# Keeps container running
+CMD ["tail", "-f", "/dev/null"]
