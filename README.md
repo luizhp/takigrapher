@@ -123,3 +123,6 @@ Check [here](docker-compose-cpu.yaml) for the docker-compose-cpu.yaml file
 ##### GPU
 Check [here](docker-compose-gpu.yaml) for the docker-compose-gpu.yaml file
 
+## License
+
+This project is licensed under the GNU GPLv3 License - see the [LICENSE](./LICENSE) file for details.
