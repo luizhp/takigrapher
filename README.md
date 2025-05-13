@@ -14,6 +14,10 @@ Supported output files types:
 ### Help
 
 ```sh
+python3 src/main.py --help
+```
+
+```sh
 usage: python3 src/main.py [options]
 
 Transcribe media files to LRC using Whisper
@@ -68,7 +72,7 @@ pip3 install -r requirements.txt
 
 #### Command line
 ```sh
-python3 src/main.py -v -m ./media/holiday.mp4 -n base.en -tt lrc -te overwrite
+python3 src/main.py -v -m ./media/sample.mp3 -n base.en -tt lrc -te overwrite
 ```
 
 ### Docker
