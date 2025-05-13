@@ -1,0 +1,19 @@
+services:
+  takigrapher:
+    image: luizhp/takigrapher:latest
+    container_name: takigrapher
+    restart: unless-stopped
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - "/mnt/music/:/app/media/"
+      - "./data/whisper/cache:/root/.cache/whisper" 
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+    networks:
+      - takigrapher-net
+
+networks:
+  takigrapher-net:
+    name: takigrapher-net
+    driver: bridge
