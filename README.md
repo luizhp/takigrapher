@@ -61,6 +61,8 @@ python3 src/main.py --media ./media --modelname tiny --device cuda --verbose --s
 
 #### Setup
 ```sh
+python3 -m venv venv
+source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
