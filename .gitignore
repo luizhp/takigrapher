@@ -27,4 +27,5 @@ venv/
 .vscode/
 .idea/
 
-media/
+media/*
+!media/sample.mp3
