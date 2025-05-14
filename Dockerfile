@@ -1,10 +1,10 @@
 FROM python:3.10-slim
 
 # Set environment variables
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 LABEL maintainer="luizhp <luizhp@yahoo.com>"
 LABEL description="Dockerfile for OpenAi Whisper ASR with CUDA support"
-LABEL version="0.0.2"
+LABEL version="0.0.3"
 LABEL repository="https://github.com/luizhp/takigrapher"
 LABEL homepage="https://github.com/luizhp/takigrapher"
 LABEL license="GPLv3"
@@ -17,8 +17,8 @@ RUN apt-get update && \
 
 # Install Whisper and torch (with CUDA support)
 RUN pip3 install --upgrade pip --root-user-action=ignore && \
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 --root-user-action=ignore && \
-    pip3 install openai-whisper --root-user-action=ignore
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 --root-user-action=ignore 
+    #&&    pip3 install openai-whisper --root-user-action=ignore
 
 # Creates work directory
 WORKDIR /app
@@ -26,6 +26,11 @@ WORKDIR /app
 # Copy the script to the container
 COPY src/ ./src/
 COPY requirements.txt README.md ./
+
+# Copy the takigrapher script to the container
+RUN touch /usr/local/bin/takigrapher && \
+    echo '#!/bin/bash\npython3 /app/src/main.py "$@"' > /usr/local/bin/takigrapher && \
+    chmod +x /usr/local/bin/takigrapher
 
 # Creates directory for media files (can be overridden by volume)
 RUN mkdir -p /app/media

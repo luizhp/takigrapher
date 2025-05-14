@@ -46,11 +46,9 @@ options:
   -st [TYPE], --sourcetype [TYPE]
                         available types: mp3, wav, m4a, flac, aac, ogg, wma, mp4, mkv, webm, opus, mov, avi. (Default: all)
   -sl [LANGUAGE], --sourcelanguage [LANGUAGE]
-                        ISO 639-1 available languages:
-                        af: afrikaans, am: amharic, ar: arabic, as: assamese, az: azerbaijani, ba: bashkir, be: belarusian, bg: bulgarian, bn: bengali, bo: tibetan, br: breton, bs: bosnian, ca: catalan, cs: czech, cy: welsh, da: danish, de: german, el: greek, en: english, es: spanish, et: estonian, eu: basque, fa: persian, fi: finnish, fo: faroese, fr: french, gl: galician, gu: gujarati, ha: hausa, haw: hawaiian, he: hebrew, hi: hindi, hr: croatian, ht: haitian creole, hu: hungarian, hy: armenian, id: indonesian, is: icelandic, it: italian, ja: japanese, jw: javanese, ka: georgian, kk: kazakh, km: khmer, kn: kannada, ko: korean, la: latin, lb: luxembourgish, ln: lingala, lo: lao, lt: lithuanian, lv: latvian, mg: malagasy, mi: maori, mk: macedonian, ml: malayalam, mn: mongolian, mr: marathi, ms: malay, mt: maltese, my: myanmar, ne: nepali, nl: dutch, nn: nynorsk, no: norwegian, oc: occitan, pa: punjabi, pl: polish, ps: pashto, pt: portuguese, ro: romanian, ru: russian, sa: sanskrit, sd: sindhi, si: sinhala, sk: slovak, sl: slovenian, sn: shona, so: somali, sq: albanian, sr: serbian, su: sundanese, sv: swedish, sw: swahili, ta: tamil, te: telugu, tg: tajik, th: thai, tk: turkmen, tl: tagalog, tr: turkish, tt: tatar, uk: ukrainian, ur: urdu, uz: uzbek, vi: vietnamese, yi: yiddish, yo: yoruba, yue: cantonese, zh: chinese.  (Default: auto)
   -tl [LANGUAGE], --targetlanguage [LANGUAGE]
                         ISO 639-1 available languages:
-                        af: afrikaans, am: amharic, ar: arabic, as: assamese, az: azerbaijani, ba: bashkir, be: belarusian, bg: bulgarian, bn: bengali, bo: tibetan, br: breton, bs: bosnian, ca: catalan, cs: czech, cy: welsh, da: danish, de: german, el: greek, en: english, es: spanish, et: estonian, eu: basque, fa: persian, fi: finnish, fo: faroese, fr: french, gl: galician, gu: gujarati, ha: hausa, haw: hawaiian, he: hebrew, hi: hindi, hr: croatian, ht: haitian creole, hu: hungarian, hy: armenian, id: indonesian, is: icelandic, it: italian, ja: japanese, jw: javanese, ka: georgian, kk: kazakh, km: khmer, kn: kannada, ko: korean, la: latin, lb: luxembourgish, ln: lingala, lo: lao, lt: lithuanian, lv: latvian, mg: malagasy, mi: maori, mk: macedonian, ml: malayalam, mn: mongolian, mr: marathi, ms: malay, mt: maltese, my: myanmar, ne: nepali, nl: dutch, nn: nynorsk, no: norwegian, oc: occitan, pa: punjabi, pl: polish, ps: pashto, pt: portuguese, ro: romanian, ru: russian, sa: sanskrit, sd: sindhi, si: sinhala, sk: slovak, sl: slovenian, sn: shona, so: somali, sq: albanian, sr: serbian, su: sundanese, sv: swedish, sw: swahili, ta: tamil, te: telugu, tg: tajik, th: thai, tk: turkmen, tl: tagalog, tr: turkish, tt: tatar, uk: ukrainian, ur: urdu, uz: uzbek, vi: vietnamese, yi: yiddish, yo: yoruba, yue: cantonese, zh: chinese. (Default: auto)
+                        af: afrikaans|am: amharic|ar: arabic|as: assamese|az: azerbaijani|ba: bashkir|be: belarusian|bg: bulgarian|bn: bengali|bo: tibetan|br: breton|bs: bosnian|ca: catalan|cs: czech|cy: welsh|da: danish|de: german|el: greek|en: english|es: spanish|et: estonian|eu: basque|fa: persian|fi: finnish|fo: faroese|fr: french|gl: galician|gu: gujarati|ha: hausa|haw: hawaiian|he: hebrew|hi: hindi|hr: croatian|ht: haitian creole|hu: hungarian|hy: armenian|id: indonesian|is: icelandic|it: italian|ja: japanese|jw: javanese|ka: georgian|kk: kazakh|km: khmer|kn: kannada|ko: korean|la: latin|lb: luxembourgish|ln: lingala|lo: lao|lt: lithuanian|lv: latvian|mg: malagasy|mi: maori|mk: macedonian|ml: malayalam|mn: mongolian|mr: marathi|ms: malay|mt: maltese|my: myanmar|ne: nepali|nl: dutch|nn: nynorsk|no: norwegian|oc: occitan|pa: punjabi|pl: polish|ps: pashto|pt: portuguese|ro: romanian|ru: russian|sa: sanskrit|sd: sindhi|si: sinhala|sk: slovak|sl: slovenian|sn: shona|so: somali|sq: albanian|sr: serbian|su: sundanese|sv: swedish|sw: swahili|ta: tamil|te: telugu|tg: tajik|th: thai|tk: turkmen|tl: tagalog|tr: turkish|tt: tatar|uk: ukrainian|ur: urdu|uz: uzbek|vi: vietnamese|yi: yiddish|yo: yoruba|yue: cantonese|zh: chinese. (Default: auto)
   -tt [TYPE], --targettype [TYPE]
                         available types: lrc, txt, srt, json, vtt. (Default: lrc)
   -te [ACTION], --targetexists [ACTION]
@@ -109,19 +107,19 @@ Below are some examples of how to execute the application for transcribing files
 ```sh
 docker exec -it takigrapher bash
 
-python3 src/main.py -v -m ./media/sample.mp3 -n tiny.en -tt srt -te overwrite -sl en -ts
+takigrapher -v -m ./media/sample.mp3 -n tiny.en -tt srt -te overwrite -sl en -ts
 ```
 
 ```sh
-docker exec -it takigrapher python3 src/main.py -v -m ./media/music/bandname/ -n medium -tt lrc -te overwrite -ts
+docker exec -it takigrapher takigrapher -v -m ./media/music/bandname/ -n medium -tt lrc -te overwrite -ts
 ```
 
 ```sh
-docker exec -it takigrapher python3 src/main.py -v -m ./media/music/bandname/song.mp3 -n medium -tt lrc -te overwrite -ts
+docker exec -it takigrapher takigrapher -v -m ./media/music/bandname/song.mp3 -n medium -tt lrc -te overwrite -ts
 ```
 
 ```sh
-docker exec -it takigrapher python3 src/main.py -m ./media/tv/mytvshow/ -n medium.en -sl en -tt srt -te rename
+docker exec -it takigrapher takigrapher -m ./media/tv/mytvshow/ -n medium.en -sl en -tt srt -te rename
 ```
 
 ### Docker Compose

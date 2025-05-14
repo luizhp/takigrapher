@@ -1,7 +1,7 @@
 FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
 LABEL maintainer="luizhp <luizhp@yahoo.com>"
 LABEL description="Dockerfile for OpenAi Whisper ASR with CUDA support"
-LABEL version="0.0.2"
+LABEL version="0.0.3"
 LABEL repository="https://github.com/luizhp/takigrapher"
 LABEL homepage="https://github.com/luizhp/takigrapher"
 LABEL license="GPLv3"

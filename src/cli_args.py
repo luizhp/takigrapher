@@ -19,9 +19,9 @@ python3 src/main.py --media ./media --modelname tiny --device cuda --verbose --s
                          metavar="PATH",
                          action="store",
                          nargs="?",
-                         required=False, 
+                         required=True, 
                          type=str,
-                         help="media folder path to recursively search for media files",
+                         help="Path to a file or directory where media files will be searched recursively",
                          default="./media")
 
     parser.add_argument("-n", "--modelname", 
@@ -78,7 +78,7 @@ large-v3: Latest and most advanced version; best overall performance.""",
                         default=None)
 
     languagessorted = sorted(whisper.tokenizer.LANGUAGES.items())
-    languagehelp = "\n".join([f"{k}: {v}" for k, v in languagessorted])
+    languagehelp = "|".join([f"{k}: {v}" for k, v in languagessorted])
     languagechoices = [f"{k}" for k, _ in languagessorted]
     parser.add_argument("-sl","--sourcelanguage",
                         dest="sourcelanguage",
@@ -88,7 +88,7 @@ large-v3: Latest and most advanced version; best overall performance.""",
                         required=False,
                         type=str,
                         choices=languagechoices,
-                        help=f"ISO 639-1 available languages:\n{languagehelp}",
+                        # help=f"ISO 639-1 available languages:\n{languagehelp}",
                         default=None)
 
     parser.add_argument("-tl","--targetlanguage",
