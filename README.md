@@ -81,7 +81,7 @@ python3 src/main.py -v -m ./media/sample.mp3 -n base.en -tt lrc -te overwrite
 
 ##### CPU
 ```sh
-docker run -name takigrapher \
+docker run -d -name takigrapher \
 -v "./data/whisper/cache:/root/.cache/whisper" \
 -v "/mnt/nas/music/:/app/media/" \
 luizhp/takigrapher:latest
@@ -107,6 +107,12 @@ luizhp/takigrapher:latest
 
 Below are some examples of how to execute the application for transcribing files or folders containing audio using different command-line options and Docker commands:
 ```sh
+docker exec -it takigrapher bash
+
+python3 src/main.py -v -m ./media/sample.mp3 -n tiny.en -tt srt -te overwrite -sl en -ts
+```
+
+```sh
 docker exec -it takigrapher python3 src/main.py -v -m ./media/music/bandname/ -n medium -tt lrc -te overwrite -ts
 ```
 
@@ -117,7 +123,6 @@ docker exec -it takigrapher python3 src/main.py -v -m ./media/music/bandname/son
 ```sh
 docker exec -it takigrapher python3 src/main.py -m ./media/tv/mytvshow/ -n medium.en -sl en -tt srt -te rename
 ```
-
 
 ### Docker Compose
 

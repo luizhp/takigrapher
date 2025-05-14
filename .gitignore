@@ -29,3 +29,5 @@ venv/
 
 media/*
 !media/sample.mp3
+
+data/

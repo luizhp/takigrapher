@@ -23,7 +23,7 @@ nvidia-cusparse-cu12==12.1.0.106
 nvidia-nccl-cu12==2.21.5
 nvidia-nvjitlink-cu12==12.1.105
 nvidia-nvtx-cu12==12.1.105
-openai-whisper @ git+https://github.com/openai/whisper.git@517a43ecd132a2089d85f4ebc044728a71d49f6e
+openai-whisper==20240930
 regex==2024.11.6
 requests==2.32.3
 sympy==1.13.1

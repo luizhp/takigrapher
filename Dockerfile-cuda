@@ -1,7 +1,4 @@
-FROM python:3.10-slim
-
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
+FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
 LABEL maintainer="luizhp <luizhp@yahoo.com>"
 LABEL description="Dockerfile for OpenAi Whisper ASR with CUDA support"
 LABEL version="0.0.2"
@@ -12,27 +9,28 @@ LABEL org.opencontainers.image.source="https://github.com/luizhp/takigrapher"
 
 # Installs system dependencies
 RUN apt-get update && \
-    apt-get install -y ffmpeg && \
+    apt-get install -y python3 python3-pip ffmpeg git && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Whisper and torch (with CUDA support)
-RUN pip3 install --upgrade pip --root-user-action=ignore && \
-    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 --root-user-action=ignore && \
-    pip3 install openai-whisper --root-user-action=ignore
+RUN pip3 install --upgrade pip && \
+    pip3 install torch --index-url https://download.pytorch.org/whl/cu121 && \
+    pip3 install openai-whisper
 
 # Creates work directory
 WORKDIR /app
 
 # Copy the script to the container
 COPY src/ ./src/
-COPY requirements.txt README.md ./
+COPY requirements.txt ./
+COPY README.md ./
 
 # Creates directory for media files (can be overridden by volume)
 RUN mkdir -p /app/media
 COPY media/sample.mp3 ./media/
 
 # Installs Python dependencies
-RUN if [ -f requirements.txt ]; then pip3 install -r requirements.txt --root-user-action=ignore; fi
+RUN if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
 
 # Keeps container running
 CMD ["tail", "-f", "/dev/null"]
