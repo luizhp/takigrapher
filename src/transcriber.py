@@ -41,11 +41,12 @@ def transcribe_media(config : TranscriptionConfig, media_file_path: str):
                 return
         case 'rename':
             base, ext = os.path.splitext(abs_lrc_file_path)
-            i = 1
+            i = 0
             while os.path.exists(abs_lrc_file_path):
-                abs_lrc_file_path = f"{base}_{i}{ext}"
                 i += 1
-            log(f"Avoiding collision by renaming existing file to: {abs_lrc_file_path}")
+                abs_lrc_file_path = f"{base}_{i}{ext}"
+            if i > 0:
+                log(f"Avoiding collision by renaming existing file to: {abs_lrc_file_path}")
         case 'overwrite':
             log(f"Overwriting existing file: {abs_lrc_file_path}")
             pass
