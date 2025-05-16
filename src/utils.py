@@ -12,7 +12,7 @@ def log(message: str, *args, **kwargs):
     print(f"[{timestamp}] {formatted}", **kwargs, file=sys.stdout)
 
 
-def list_media_files(folder_path: str, sourcetype: str = None) -> list:
+def list_media_files(path: str, sourcetype: str = None) -> list:
     """
     Returns a list of absolute paths to supported media files found recursively in the given folder.
     """
@@ -23,7 +23,7 @@ def list_media_files(folder_path: str, sourcetype: str = None) -> list:
     if sourcetype:
         supported_exts = tuple(f".{sourcetype.lower()}")
 
-    abs_folder = os.path.abspath(folder_path)
+    abs_folder = os.path.abspath(path)
     media_files = []
 
     # Check if the folder is a file
@@ -34,11 +34,12 @@ def list_media_files(folder_path: str, sourcetype: str = None) -> list:
         else:
             log(f"File is not a supported media file: {abs_folder}")
         return media_files
+    else:
+        if not os.path.exists(abs_folder):
+            log(f"Folder does not exist: {abs_folder}")
+            return media_files
 
-    # Check if the folder exists
-    if not os.path.exists(abs_folder):
-        log(f"Folder does not exist: {abs_folder}")
-        return media_files
+    # Iterate over the path
     for root, _, files in os.walk(abs_folder):
         for file in files:
             if file.lower().endswith(supported_exts):
