@@ -1,8 +1,8 @@
 import whisper  # openai-whisper
-from TranscriptionConfig import TranscriptionConfig
-from utils import log
+from models.transcription import Transcription
+from utils.log import log
 
-def load_whisper_model(config: TranscriptionConfig):
+def load_whisper_model(config: Transcription):
     """
     Loads the Whisper model with the appropriate device (GPU if available, else CPU).
     Returns the loaded model or None if loading fails.

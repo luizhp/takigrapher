@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-import suppress_warnings
-import os
+import utils.suppress_warnings as suppress_warnings
 from transcriber import transcribe_media
 from openaiwhisper import load_whisper_model
-from utils import log, list_media_files
-from cli_args import parse_args_and_build_config
+from utils.log import log
+from utils.files import list_media_files
+from utils.cli_args import parse_args_and_build_config
 
 def main():
 
@@ -19,16 +19,16 @@ def main():
     if config is None:
         log("Failed to parse command line arguments")
         return
-    
+
     # Search media files
-    log(f"Searching for media in {config.media_search_folder}")
+    log(f"Searching for media in {config.media_path}")
     if config.sourcetype is not None:
         log(f"Only searching for {config.sourcetype} files")    
-    config.media_files = list_media_files(config.media_search_folder, config.sourcetype)
-    if not config.media_files:
-        log(f"No media files found in {config.media_search_folder}")
+    media_files = list_media_files(config.media_path, config.sourcetype)
+    if not media_files:
+        log(f"No media files found in {config.media_path}")
         return
-    log(f"Found {len(config.media_files)} media files")
+    log(f"Found {len(media_files)} media files")
 
     # Load model
     log("Loading Whisper model (it can take some time)")
@@ -39,7 +39,7 @@ def main():
     log(f"Model loaded: {config.model_name}")
 
     # Transcribe media files
-    for media_file_path in config.media_files:
+    for media_file_path in media_files:
         transcribe_media(config, media_file_path)
 
     log("Done")

@@ -1,13 +1,13 @@
 import os
-from utils import log
-from TranscriptionConfig import TranscriptionConfig
+from utils.log import log
+from models.transcription import Transcription
 from transformers.lrc import segments2lrc
 from transformers.srt import segments2srt
 from transformers.vtt import segments2vtt
 from transformers.json import segments2json
 from transformers.txt import segments2txt
 
-def transcribe_media(config : TranscriptionConfig, media_file_path: str):
+def transcribe_media(config : Transcription, media_file_path: str):
     """
     Transcribes a media file using Whisper.
     The output file will be saved in the same directory as the media file, with the same base name.

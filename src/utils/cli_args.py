@@ -1,6 +1,6 @@
 import argparse
 import whisper
-from TranscriptionConfig import TranscriptionConfig
+from models.transcription import Transcription
 
 def parse_args_and_build_config():
     parser = argparse.ArgumentParser(
@@ -15,7 +15,7 @@ python3 src/main.py --media ./media --modelname tiny --device cuda --verbose --s
     )
 
     parser.add_argument("-m", "--media", 
-                         dest="media_search_folder",
+                         dest="media_path",
                          metavar="PATH",
                          action="store",
                          nargs="?",
@@ -133,8 +133,8 @@ large-v3: Latest and most advanced version; best overall performance.""",
 
     args = parser.parse_args()
 
-    config = TranscriptionConfig()
-    config.media_search_folder = args.media_search_folder
+    config = Transcription()
+    config.media_path = args.media_path
     config.model_name = args.model_name
     config.device = args.device
     config.verbose = args.verbose
