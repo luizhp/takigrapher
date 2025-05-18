@@ -2,8 +2,9 @@ from dataclasses import dataclass
 
 @dataclass
 class Transcription:
-    device: str = None
     verbose: bool = None
+    device: str = None
+    inmemory: bool = False
     sourcetype: str = None
     sourcelanguage: str = None
     targetlanguage: str = None

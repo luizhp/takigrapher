@@ -2,12 +2,12 @@
 Automatic folder recursive transcription of any file containing audio using OpenAI Whisper.
 
 Audio files supported:
-.mp3, .wav, .m4a, .flac, .aac, .ogg, .wma, .mp4, .mkv, .webm, .opus, .mov, .avi
+`.mp3, .wav, .m4a, .flac, .aac, .ogg, .wma, .mp4, .mkv, .webm, .opus, .mov, .avi`
 
 Files will be saved in the same directory as the media file, with the same base name.
 
 Supported output files types:
-.lrc, .vtt, .srt, .txt, .json
+`.lrc, .vtt, .srt, .txt, .json`
 
 ## Usage
 
@@ -18,14 +18,14 @@ python3 src/main.py --help
 ```
 
 ```sh
-usage: python3 src/main.py [options]
+usage: python3 main.py [options]
 
 Transcribe media files to LRC using Whisper
 
 options:
   -h, --help            show this help message and exit
   -m [PATH], --media [PATH]
-                        media folder path to recursively search for media files
+                        Path to a file or directory where media files will be searched recursively
   -n [MODEL], --modelname [MODEL]
                         available whisper models: (Default: tiny)
                         tiny: Smallest, fastest model with lower accuracy.
@@ -42,9 +42,10 @@ options:
                         large-v3: Most advanced, best performance overall.
                         large-v3-turbo: Optimized large-v3, faster with similar accuracy.
                         turbo: Fastest variant, high accuracy, resource-efficient.
+  -v, --verbose         activate verbose mode
+  -im, --inmemory       load model entirely into RAM
   -d [DEVICE], --device [DEVICE]
                         available devices: cpu or cuda
-  -v, --verbose         activate verbose mode
   -st [TYPE], --sourcetype [TYPE]
                         available types: mp3, wav, m4a, flac, aac, ogg, wma, mp4, mkv, webm, opus, mov, avi. (Default: all)
   -sl [LANGUAGE], --sourcelanguage [LANGUAGE]
@@ -58,7 +59,7 @@ options:
   -ts, --targetsuffix   add suffix to target file name. (Default: false)
 
 Example usage:
-python3 src/main.py --media ./media --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en
+python3 src/main.py --media ./media/sample.mp3 --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en
 ```
 
 ### CLI
@@ -72,7 +73,11 @@ pip3 install -r requirements.txt
 
 #### Command line
 ```sh
+# base model without in-memory
 python3 src/main.py -v -m ./media/sample.mp3 -n base.en -tt lrc -te overwrite
+
+# lager model with in-memory model
+python3 src/main.py -v -m ./media/sample.mp3 -n large -im -sl en -tt lrc -te overwrite -ts
 ```
 
 ### Docker

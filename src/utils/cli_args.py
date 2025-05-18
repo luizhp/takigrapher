@@ -9,7 +9,7 @@ def parse_args_and_build_config():
         usage="python3 main.py [options]",
         prog="main.py",
         epilog="""Example usage:
-python3 src/main.py --media ./media --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en""",
+python3 src/main.py --media ./media/sample.mp3 --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en""",
         allow_abbrev=True,
         add_help=True
     )
@@ -50,6 +50,20 @@ turbo: Fastest variant, high accuracy, resource-efficient.""",
                          default="tiny"
     )
 
+    parser.add_argument("-v", "--verbose",
+                        dest="verbose",
+                        action="store_true",
+                        required=False,
+                        help="activate verbose mode",
+                        default=None)
+
+    parser.add_argument("-im", "--inmemory",
+                        dest="inmemory",
+                        action="store_true",
+                        required=False,
+                        help="load model entirely into RAM",
+                        default=False)
+
     parser.add_argument("-d", "--device",
                          dest="device",
                          metavar="DEVICE",
@@ -60,13 +74,6 @@ turbo: Fastest variant, high accuracy, resource-efficient.""",
                          choices=["cpu", "cuda"], 
                          help="available devices: cpu or cuda",
                          default=None)
-
-    parser.add_argument("-v", "--verbose",
-                        dest="verbose",
-                        action="store_true",
-                        required=False,
-                        help="activate verbose mode",
-                        default=None)
 
     parser.add_argument("-st", "--sourcetype", 
                         dest="sourcetype",
@@ -138,8 +145,9 @@ turbo: Fastest variant, high accuracy, resource-efficient.""",
     config = Transcription()
     config.media_path = args.media_path
     config.model_name = args.model_name
-    config.device = args.device
     config.verbose = args.verbose
+    config.device = args.device
+    config.inmemory = args.inmemory
     config.sourcetype = args.sourcetype
     config.sourcelanguage = args.sourcelanguage
     config.targetlanguage = args.targetlanguage

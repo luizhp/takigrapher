@@ -19,7 +19,7 @@ def load_whisper_model(config: Transcription):
         log(f"Loading Whisper model: {config.model_name}")
         model = whisper.load_model(config.model_name,
                                    device=device,
-                                   in_memory=True)
+                                   in_memory=config.inmemory)
         return model
     except Exception as e:
         log(f"Error: Whisper model load failed: {e}")
