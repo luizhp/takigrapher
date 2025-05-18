@@ -22,7 +22,7 @@ def transcribe_media(config : TranscriptionConfig, media_file_path: str):
         log(f"Media file does not exist: {abs_media_file_path}")
         return
 
-    # Check if the media file is a valid audio file
+    # Check if the media file is a valid file
     if not os.path.isfile(abs_media_file_path):
         log(f"Media file is not a valid file: {abs_media_file_path}")
         return
@@ -31,27 +31,27 @@ def transcribe_media(config : TranscriptionConfig, media_file_path: str):
     src_lng = ""if config.sourcelanguage is None else f"_{config.sourcelanguage}"
     src_lng = ""if not config.targetsuffix else f"{src_lng}"
     lrc_file_path_alongside_media = os.path.splitext(media_file_path)[0] + src_lng + f".{config.targettype}"
-    abs_lrc_file_path = os.path.abspath(lrc_file_path_alongside_media)
+    tgt_abs_file_path = os.path.abspath(lrc_file_path_alongside_media)
 
     # Check if the output file already exists
     match config.targetexists:
         case 'skip':
-            if os.path.exists(abs_lrc_file_path):
-                log(f"Skipping existing file: {abs_lrc_file_path}")
+            if os.path.exists(tgt_abs_file_path):
+                log(f"Skipping existing file: {tgt_abs_file_path}")
                 return
         case 'rename':
-            base, ext = os.path.splitext(abs_lrc_file_path)
+            base, ext = os.path.splitext(tgt_abs_file_path)
             i = 0
             while os.path.exists(abs_lrc_file_path):
                 i += 1
-                abs_lrc_file_path = f"{base}_{i}{ext}"
+                tgt_abs_file_path = f"{base}_{i}{ext}"
             if i > 0:
-                log(f"Avoiding collision by renaming existing file to: {abs_lrc_file_path}")
+                log(f"Avoiding collision by renaming existing file to: {tgt_abs_file_path}")
         case 'overwrite':
-            log(f"Overwriting existing file: {abs_lrc_file_path}")
+            log(f"Overwriting existing file: {tgt_abs_file_path}")
             pass
 
-    log(f"Transcribing {abs_media_file_path} to {abs_lrc_file_path}")
+    log(f"Transcribing {abs_media_file_path} to {tgt_abs_file_path}")
 
     try:
         if config.verbose: log("⏺️ Start ⏺️")
@@ -85,8 +85,8 @@ def transcribe_media(config : TranscriptionConfig, media_file_path: str):
 
     # Output the transcription to a file
     log("Writing to file...")
-    with open(abs_lrc_file_path, 'w', encoding='utf-8') as f:
+    with open(tgt_abs_file_path, 'w', encoding='utf-8') as f:
         for line in transcribe_content:
             f.write(line)
 
-    log(f"Transcription done: {abs_lrc_file_path}")
+    log(f"Transcription done: {tgt_abs_file_path}")
