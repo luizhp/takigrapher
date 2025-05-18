@@ -8,7 +8,8 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
     volumes:
-      - "/mnt/music/:/app/media/"
+      # Uncomment the line below to mount your music directory
+      # - "/mnt/music/music/:/app/media/music/"
       - "./data/whisper/cache:/root/.cache/whisper" 
       - "/etc/localtime:/etc/localtime:ro"
       - "/etc/timezone:/etc/timezone:ro"

@@ -81,7 +81,7 @@ python3 src/main.py -v -m ./media/sample.mp3 -n base.en -tt lrc -te overwrite
 ```sh
 docker run -d -name takigrapher \
 -v "./data/whisper/cache:/root/.cache/whisper" \
--v "/mnt/nas/music/:/app/media/" \
+-v "/mnt/nas/music/:/app/media/music/" \
 luizhp/takigrapher:latest
 ```
 
@@ -90,13 +90,13 @@ luizhp/takigrapher:latest
 docker run -d --gpus all \
 --name takigrapher \
 -v "./data/whisper/cache:/root/.cache/whisper" \
--v "/mnt/nas/music/:/app/media/" \
+-v "/mnt/nas/music/:/app/media/music/" \
 luizhp/takigrapher:latest
 ```
 #### Volume Mounts
 
 - mount media folder
-`-v "/mnt/nas/music/:/app/media/"`
+`-v "/mnt/nas/music/:/app/media/music/"`
 
 - keep models in /root/.cache/whisper
 `-v "./data/whisper/cache:/root/.cache/whisper"`
