@@ -6,7 +6,7 @@ from transformers.srt import segments2srt
 from transformers.vtt import segments2vtt
 from transformers.json import segments2json
 from transformers.txt import segments2txt
-from openaiwhisper import load_whisper_model
+from providers.openaiwhisper import load_whisper_model
 
 
 def start_transcription(config : Transcription, media_files: list):

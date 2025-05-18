@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import utils.suppress_warnings as suppress_warnings
-from transcriber import start_transcription
+from actions.transcriber import start_transcription
 from utils.log import log
 from utils.files import list_media_files
 from utils.cli_args import parse_args_and_build_config
