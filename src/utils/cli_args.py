@@ -31,20 +31,22 @@ python3 src/main.py --media ./media --modelname tiny --device cuda --verbose --s
                          nargs="?",
                          required=False,
                          type=str,
-                         choices=["tiny", "tiny.en", "base", "base.en", "small", "small.en", "medium", "medium.en", "large", "large-v1", "large-v2", "large-v3"],
+                         choices=whisper.available_models(),
                          help="""available whisper models: (Default: tiny)
-tiny: Smallest and fastest, with lower accuracy.
-tiny.en: English-only version of tiny; slightly more accurate for English tasks.
-base: Balance between size, speed, and accuracy.
-base.en: English-only version of base; better accuracy on English data.
+tiny: Smallest, fastest model with lower accuracy.
+tiny.en: English-only tiny, slightly better for English tasks.
+base: Balanced size, speed, and accuracy.
+base.en: English-only base, improved English performance.
 small: More accurate than base, but larger and slower.
-small.en: English-only version of small; improved performance in English.
-medium: High accuracy, consumes more resources.
-medium.en: English-only version of medium; better results on English tasks.
-large: Largest and most accurate in the original series, but heavy and slow.
-large-v1: First major large variant; improved accuracy and stability.
-large-v2: Enhanced version of v1 with better alignment and reasoning.
-large-v3: Latest and most advanced version; best overall performance.""",
+small.en: English-only small, enhanced for English tasks.
+medium: High accuracy, resource-intensive.
+medium.en: English-only medium, optimized for English.
+large: Original large model, high accuracy, heavy and slow.
+large-v1: First large variant, improved accuracy and stability.
+large-v2: Upgraded large-v1, better reasoning and alignment.
+large-v3: Most advanced, best performance overall.
+large-v3-turbo: Optimized large-v3, faster with similar accuracy.
+turbo: Fastest variant, high accuracy, resource-efficient.""",
                          default="tiny"
     )
 

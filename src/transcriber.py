@@ -6,6 +6,24 @@ from transformers.srt import segments2srt
 from transformers.vtt import segments2vtt
 from transformers.json import segments2json
 from transformers.txt import segments2txt
+from openaiwhisper import load_whisper_model
+
+
+def start_transcription(config : Transcription, media_files: list):
+    """
+    Starts the transcription process for a list of media files.
+    """
+    # Load model
+    log("Loading Whisper model (it can take some time)")
+    config.model = load_whisper_model(config)
+    if config.model is None:
+        log(f"Failed to load model: {config.model_name}")
+        return
+    log(f"Model loaded: {config.model_name}")
+
+    # Transcribe media files
+    for media_file_path in media_files:
+        transcribe_media(config, media_file_path)
 
 def transcribe_media(config : Transcription, media_file_path: str):
     """

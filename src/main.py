@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import utils.suppress_warnings as suppress_warnings
-from transcriber import transcribe_media
-from openaiwhisper import load_whisper_model
+from transcriber import start_transcription
 from utils.log import log
 from utils.files import list_media_files
 from utils.cli_args import parse_args_and_build_config
@@ -30,17 +29,8 @@ def main():
         return
     log(f"Found {len(media_files)} media files")
 
-    # Load model
-    log("Loading Whisper model (it can take some time)")
-    config.model = load_whisper_model(config)
-    if config.model is None:
-        log(f"Failed to load model: {config.model_name}")
-        return
-    log(f"Model loaded: {config.model_name}")
-
-    # Transcribe media files
-    for media_file_path in media_files:
-        transcribe_media(config, media_file_path)
+    # Start transcription
+    start_transcription(config, media_files)
 
     log("Done")
 
