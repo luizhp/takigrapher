@@ -35,4 +35,7 @@ def main():
     log("Done")
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nExecution interrupted by user.")
