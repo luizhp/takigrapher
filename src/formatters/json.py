@@ -2,14 +2,14 @@ import json
 
 def segments2json(segments):
     """
-    Converte segmentos do Whisper para uma string JSON serializada.
-    Cada objeto no JSON contém 'start', 'end' e 'text'.
-    
+    Converts Whisper segments to a serialized JSON string.
+    Each object in the JSON contains 'start', 'end', and 'text'.
+
     Args:
-        segments: Lista de segmentos do Whisper, cada um com 'start', 'end', 'text' e opcionalmente 'words'.
-    
+        segments: List of Whisper segments, each with 'start', 'end', 'text', and optionally 'words'.
+
     Returns:
-        String contendo o JSON serializado.
+        String containing the serialized JSON.
     """
 def segments2json(segments):
     json_content = []

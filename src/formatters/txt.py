@@ -1,13 +1,13 @@
 def segments2txt(segments):
     """
-    Converte segmentos do Whisper para texto simples.
-    Cada segmento é convertido em uma linha de texto.
-    
+    Converts Whisper segments to plain text.
+    Each segment is converted into a line of text.
+
     Args:
-        segments: Lista de segmentos do Whisper, cada um com 'text'.
-    
+        segments: List of Whisper segments, each with 'text'.
+
     Returns:
-        String contendo o texto transcrito, com linhas separadas por quebras de linha.
+        String containing the transcribed text, with lines separated by line breaks.
     """
     txt_content = []
 
