@@ -19,7 +19,6 @@ def translate_text_offline(model_name: str, text_original: tuple[str, str]) -> t
             log("No text found in the segment for translation.")
             return None
         segment_text = segment['text']
-        print("segment_text", segment_text)
         inputs = tokenizer(segment_text,
                            return_tensors="pt",
                            truncation=True,
@@ -34,6 +33,7 @@ def translate_text_offline(model_name: str, text_original: tuple[str, str]) -> t
             spaces_between_special_tokens=False
         )
         segment['translated_text'] = translated_text
+        log(f"{segment_text} ⏩⏩⏩ {translated_text}")
 
     return text_original
 

@@ -56,12 +56,12 @@ def process_media(config : Transcription, media_files: list):
               else:
                   log(f"Translation completed for {media_file_path}")
 
-        # Convert transcription to the desired format
+        # Convert transcription/translation to the desired format
         target_text = text_translated if text_translated is not None else text_transcription
         target_text_type = 'translation' if text_translated is not None else 'transcription'
         text_transformed : str = transform_media(config, target_text, target_text_type)
 
-        # Output transcribed file
+        # Output transformed text to a file
         """
         The output file will be saved in the same directory as the media file, with the same base name.
         The source language can be specified or it will be detected automatically.
@@ -93,8 +93,6 @@ def process_media(config : Transcription, media_files: list):
                 if os.path.exists(tgt_abs_file_path):
                   log(f"Overwriting existing file: {tgt_abs_file_path}")
                 pass
-
-        # log(f"Transcribing {abs_media_file_path} to {tgt_abs_file_path}")
 
         log("Writing to file...")
         with open(tgt_abs_file_path, 'w', encoding='utf-8') as f:
