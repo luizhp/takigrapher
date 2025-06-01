@@ -8,7 +8,7 @@ def format_time_lrc(seconds: float) -> str:
     centiseconds = int((remaining_seconds - secs) * 100)
     return f"[{minutes:02d}:{secs:02d}.{centiseconds:02d}]"
 
-def segments2lrc(segments):
+def segments2lrc(segments, text_tag: str = 'text') -> str:
     """
     Build LRC content lines from Whisper segments.
     Returns a list of LRC lines.
@@ -65,4 +65,5 @@ def segments2lrc(segments):
         if current_line_words and current_line_start_time is not None:
             lrc_line = f"{format_time_lrc(current_line_start_time)}{' '.join(current_line_words)}"
             lrc_content.append(f"{lrc_line}\n")
-    return lrc_content
+
+    return ''.join(lrc_content)

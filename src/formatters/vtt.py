@@ -9,7 +9,7 @@ def format_time_vtt(seconds: float) -> str:
     seconds = total_seconds % 60
     return f"{hours:02d}:{minutes:02d}:{seconds:02d}.{milliseconds:03d}"
 
-def segments2vtt(segments):
+def segments2vtt(segments, text_tag: str = 'text') -> str:
     """
     Build VTT content from Whisper segments.
     Each segment is converted to a VTT block with start and end times.
@@ -23,11 +23,11 @@ def segments2vtt(segments):
     vtt_content = ["WEBVTT\n"]
 
     for segment in segments:
-        if segment.get('text', '').strip():
+        if segment.get(text_tag, '').strip():
             start_time = segment.get('start', 0.0)
             end_time = segment.get('end', start_time + 1.0)  # Default to 1 second if end is not provided
-            text = segment['text'].strip()
+            text = segment[text_tag].strip()
             vtt_block = f"{format_time_vtt(start_time)} --> {format_time_vtt(end_time)}\n{text}\n"
             vtt_content.append(f"{vtt_block}\n")
 
-    return vtt_content
+    return ''.join(vtt_content)

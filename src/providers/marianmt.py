@@ -2,20 +2,25 @@ import os
 from utils.log import log
 from transformers import MarianMTModel, MarianTokenizer
 
-def translate_text_offline(model_name: str, text: str) -> str:
+def translate_text_offline(model_name: str, text_original: tuple[str, str]) -> tuple[str, str]:
     """
     Translates text using MarianMT. Attempts to load the model and download if necessary.
     """
+    if text_original is None:
+        log("No text provided for translation.")
+        return None
+    
     tokenizer, model = load_marianmt_model(model_name)
     if tokenizer is None or model is None:
         return None
-
-    translated_lines = []
-    for line in text.splitlines():
-        if line.strip() == "":
-            translated_lines.append("")  # mantém linha em branco
-            continue
-        inputs = tokenizer(line,
+    
+    for segment in text_original['segments']:
+        if segment['text'] is None:
+            log("No text found in the segment for translation.")
+            return None
+        segment_text = segment['text']
+        print("segment_text", segment_text)
+        inputs = tokenizer(segment_text,
                            return_tensors="pt",
                            truncation=True,
                            max_length=512,
@@ -28,9 +33,9 @@ def translate_text_offline(model_name: str, text: str) -> str:
             clean_up_tokenization_spaces=False,
             spaces_between_special_tokens=False
         )
-        translated_lines.append(translated_text)
+        segment['translated_text'] = translated_text
 
-    return "\n".join(translated_lines)
+    return text_original
 
 def load_marianmt_model(model_name):
   """

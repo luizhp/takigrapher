@@ -1,4 +1,5 @@
 import os
+from actions.transformer import transform_media
 from utils.log import log
 from models.transcription import Transcription
 from actions.transcriber import transcribe_media
@@ -19,17 +20,27 @@ def process_media(config : Transcription, media_files: list):
     log(f"Model loaded: {config.model_name}")
 
     for media_file_path in media_files:
+
         # Transcribe media file
-        text_transcription = None
-        config.sourcelanguage, text_transcription = transcribe_media(config, media_file_path)
+        text_transcription : tuple[str, str] = transcribe_media(config, media_file_path)
         if text_transcription is None:
             log(f"Failed to transcribe media file: {media_file_path}")
-            continue
+            break
         else:
           log(f"Transcription completed for {media_file_path}")
 
+        if 'segments' not in text_transcription:
+            log(f"ERROR: Transcription failed {media_file_path}: no segments found")
+            break
+
+        detected_language = text_transcription['language']
+        if detected_language is None:
+            log(f"ERROR: Transcription failed {media_file_path}: no language detected")
+            break
+        log(f"Detected language: {detected_language}")
+
         # Check if translation is needed
-        text_translated = None
+        text_translated : tuple[str, str] = None
         if config.targetlanguage is not None:
             # Check if the source language is set
             if config.sourcelanguage is None:
@@ -41,13 +52,14 @@ def process_media(config : Transcription, media_files: list):
               text_translated = translate_media(config, text_transcription)
               if text_translated is None:
                   log(f"Failed to translate text for {media_file_path}")
-                  continue
+                  break
               else:
                   log(f"Translation completed for {media_file_path}")
 
-        # Save transcription and translation
-        # remove recording of methods and bring here
-        # Output the transcription to a file
+        # Convert transcription to the desired format
+        target_text = text_translated if text_translated is not None else text_transcription
+        target_text_type = 'translation' if text_translated is not None else 'transcription'
+        text_transformed : str = transform_media(config, target_text, target_text_type)
 
         # Output transcribed file
         """
@@ -86,6 +98,6 @@ def process_media(config : Transcription, media_files: list):
 
         log("Writing to file...")
         with open(tgt_abs_file_path, 'w', encoding='utf-8') as f:
-            for line in text_translated if text_translated else text_transcription:
+            for line in text_transformed:
                 f.write(line)
         log(f"File written: {tgt_abs_file_path}")

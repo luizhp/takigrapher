@@ -2,7 +2,7 @@ from utils.log import log
 from models.transcription import Transcription
 from providers.marianmt import translate_text_offline
 
-def translate_media(config : Transcription, text_transcription: str) -> str:
+def translate_media(config : Transcription, text_original: tuple[str, str]) -> tuple[str, str]:
     """
     Translates the transcribed text of a media file to the target language.
     """
@@ -20,11 +20,11 @@ def translate_media(config : Transcription, text_transcription: str) -> str:
 
     # Perform translation
     log("Starting translation...")
-    translated_text =  translate_text_offline(marianmt_model, text_transcription)
+    translated_text =  translate_text_offline(marianmt_model, text_original)
 
     if translated_text is None:
         log(f"Translation failed from {config.sourcelanguage} to {config.targetlanguage}")
         return None
-    else:
-        log(f"Translation completed from {config.sourcelanguage} to {config.targetlanguage}")
-        return translated_text
+
+    log(f"Translation completed from {config.sourcelanguage} to {config.targetlanguage}")
+    return translated_text
