@@ -55,9 +55,9 @@ def process_media(config : Transcription, media_files: list):
         The source language can be specified or it will be detected automatically.
         The output file can be named <base_name>_<source_language>_<rename>.<target_type>.
         """
-        src_lng = ""if config.sourcelanguage is None else f"_{config.sourcelanguage}"
+        src_lng = ""if config.sourcelanguage is None else f".{config.sourcelanguage}"
         src_lng = ""if not config.targetsuffix else f"{src_lng}"
-        tgt_lng = ""if config.targetlanguage is None else f"_{config.targetlanguage}"
+        tgt_lng = ""if config.targetlanguage is None else f".{config.targetlanguage}"
         tgt_lng = ""if not config.targetsuffix else f"{tgt_lng}"
         lng = tgt_lng if tgt_lng else src_lng
         file_path_alongside_media = os.path.splitext(media_file_path)[0] + lng + f".{config.targettype}"

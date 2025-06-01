@@ -3,33 +3,34 @@ from utils.log import log
 from transformers import MarianMTModel, MarianTokenizer
 
 def translate_text_offline(model_name: str, text: str) -> str:
-  """
-  Translates text using MarianMT. Attempts to load the model and download if necessary.
-  """
-  # Load model and tokenizer
-  tokenizer, model = load_marianmt_model(model_name)
-  
-  if tokenizer is None or model is None:
-    return None
-    
-  # Replace newlines with a placeholder to avoid splitting sentences
-  text = text.replace('\n', ' .zz>') + ' .zz>'
+    """
+    Translates text using MarianMT. Attempts to load the model and download if necessary.
+    """
+    tokenizer, model = load_marianmt_model(model_name)
+    if tokenizer is None or model is None:
+        return None
 
-  # Tokenize and translate
-  inputs = tokenizer(text,
-                     return_tensors="pt",
-                     truncation=False,
-                     add_special_tokens=True,
-                     padding=True)
-  translations = model.generate(**inputs)
-  translated_text = tokenizer.decode(translations[0],
-                                     skip_special_tokens=True,
-                                     clean_up_tokenization_spaces=False,
-                                     spaces_between_special_tokens=False)
+    translated_lines = []
+    for line in text.splitlines():
+        if line.strip() == "":
+            translated_lines.append("")  # mantém linha em branco
+            continue
+        inputs = tokenizer(line,
+                           return_tensors="pt",
+                           truncation=True,
+                           max_length=512,
+                           add_special_tokens=True,
+                           padding=True)
+        translations = model.generate(**inputs)
+        translated_text = tokenizer.decode(
+            translations[0],
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=False,
+            spaces_between_special_tokens=False
+        )
+        translated_lines.append(translated_text)
 
-  # Replace the placeholder with newlines
-  translated_text = translated_text.replace('.zz>', '\n')
-  return translated_text
+    return "\n".join(translated_lines)
 
 def load_marianmt_model(model_name):
   """
