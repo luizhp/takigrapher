@@ -6,11 +6,6 @@ def translate_media(config : Transcription, text_transcription: str) -> str:
     """
     Translates the transcribed text of a media file to the target language.
     """
-    # Check if the model is loaded
-    # if config.model is None:
-    #     log("Model not loaded")
-    #     return None
-
     # Check if the source language is set
     if config.sourcelanguage is None:
         log("Source language not set")

@@ -25,31 +25,6 @@ def transcribe_media(config : Transcription, media_file_path: str) -> tuple[str,
         log(f"Media file is not a valid file: {abs_media_file_path}")
         return None, None
 
-    # # Output transcribed file
-    # src_lng = ""if config.sourcelanguage is None else f"_{config.sourcelanguage}"
-    # src_lng = ""if not config.targetsuffix else f"{src_lng}"
-    # file_path_alongside_media = os.path.splitext(media_file_path)[0] + src_lng + f".{config.targettype}"
-    # tgt_abs_file_path = os.path.abspath(file_path_alongside_media)
-
-    # # Check if the output file already exists
-    # match config.targetexists:
-    #     case 'skip':
-    #         if os.path.exists(tgt_abs_file_path):
-    #             log(f"Skipping existing file: {tgt_abs_file_path}")
-    #             return
-    #     case 'rename':
-    #         base, ext = os.path.splitext(tgt_abs_file_path)
-    #         i = 0
-    #         while os.path.exists(tgt_abs_file_path):
-    #             i += 1
-    #             tgt_abs_file_path = f"{base}_{i}{ext}"
-    #         if i > 0:
-    #             log(f"Avoiding collision by renaming existing file to: {tgt_abs_file_path}")
-    #     case 'overwrite':
-    #         log(f"Overwriting existing file: {tgt_abs_file_path}")
-    #         pass
-
-    # log(f"Transcribing {abs_media_file_path} to {tgt_abs_file_path}")
     log(f"Transcribing {abs_media_file_path}")
 
     try:
@@ -67,9 +42,6 @@ def transcribe_media(config : Transcription, media_file_path: str) -> tuple[str,
 
     detected_language = result['language']
     log(f"Detected language: {detected_language}")
-    # if config.sourcelanguage is None:
-    #     config.sourcelanguage = result['language']
-    #     log(f"Source language set to: {config.sourcelanguage}")
 
     if 'segments' in result:
       match config.targettype:
@@ -87,12 +59,6 @@ def transcribe_media(config : Transcription, media_file_path: str) -> tuple[str,
     if transcribe_content == []:
         log(f"ERROR: Transcription could not be converted to {config.targettype}: no segments found")
         return None, None
-
-    # # Output the transcription to a file
-    # log("Writing to file...")
-    # with open(tgt_abs_file_path, 'w', encoding='utf-8') as f:
-    #     for line in transcribe_content:
-    #         f.write(line)
 
     log(f"Transcription done")
     # log(f"Transcription done: {tgt_abs_file_path}")
