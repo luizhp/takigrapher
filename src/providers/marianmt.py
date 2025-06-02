@@ -33,7 +33,7 @@ def translate_text_offline(model_name: str, text_original: tuple[str, str]) -> t
             spaces_between_special_tokens=False
         )
         segment['translated_text'] = translated_text
-        log(f"{segment_text} ⏩⏩⏩ {translated_text}")
+        log(f"{segment_text.strip()} ⏩⏩⏩ {translated_text.strip()}")
 
     return text_original
 
