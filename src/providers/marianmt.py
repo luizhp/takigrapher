@@ -37,7 +37,7 @@ def translate_text_offline(config : Transcription, model_name: str, text_origina
         )
         segment['translated_text'] = translated_text
         cnt += 1
-        if config.verbose : log(f"{segment_text.strip()} ⏩⏩⏩ {translated_text.strip()}")
+        if config.verbose : log(f"{cnt}/{total_segments}: {segment_text.strip()} ⏩⏩⏩ {translated_text.strip()}")
         else : 
            print_progress_bar(cnt, total_segments, length=20)
 
