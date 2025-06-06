@@ -33,4 +33,6 @@ def list_media_files(path: str, sourcetype: str = None) -> list:
         for file in files:
             if file.lower().endswith(supported_exts):
                 media_files.append(os.path.join(root, file))
+
+    media_files.sort()
     return media_files
