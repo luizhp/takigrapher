@@ -1,8 +1,9 @@
 import os
 from utils.log import log
+from models.transcription import Transcription
 from transformers import MarianMTModel, MarianTokenizer
 
-def translate_text_offline(model_name: str, text_original: tuple[str, str]) -> tuple[str, str]:
+def translate_text_offline(config : Transcription, model_name: str, text_original: tuple[str, str]) -> tuple[str, str]:
     """
     Translates text using MarianMT. Attempts to load the model and download if necessary.
     """
@@ -33,7 +34,9 @@ def translate_text_offline(model_name: str, text_original: tuple[str, str]) -> t
             spaces_between_special_tokens=False
         )
         segment['translated_text'] = translated_text
-        log(f"{segment_text.strip()} ⏩⏩⏩ {translated_text.strip()}")
+        if config.verbose : log(f"{segment_text.strip()} ⏩⏩⏩ {translated_text.strip()}")
+        # todo: add progress bar
+        else : print("░", end='', flush=True)
 
     return text_original
 

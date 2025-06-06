@@ -20,7 +20,7 @@ def translate_media(config : Transcription, text_original: tuple[str, str]) -> t
 
     # Perform translation
     log("Starting translation...")
-    translated_text =  translate_text_offline(marianmt_model, text_original)
+    translated_text =  translate_text_offline(config, marianmt_model, text_original)
 
     if translated_text is None:
         log(f"Translation failed from {config.sourcelanguage} to {config.targetlanguage}")
