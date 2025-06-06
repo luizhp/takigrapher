@@ -22,19 +22,21 @@ def translate_text_offline(config : Transcription, model_name: str, text_origina
             log("No text found in the segment for translation.")
             return None
         segment_text = segment['text']
-        inputs = tokenizer(segment_text,
-                           return_tensors="pt",
-                           truncation=True,
-                           max_length=512,
-                           add_special_tokens=True,
-                           padding=True)
-        translations = model.generate(**inputs)
-        translated_text = tokenizer.decode(
-            translations[0],
-            skip_special_tokens=True,
-            clean_up_tokenization_spaces=False,
-            spaces_between_special_tokens=False
-        )
+        translated_text = ""
+        if segment_text.strip():
+          inputs = tokenizer(segment_text,
+                            return_tensors="pt",
+                            truncation=True,
+                            max_length=512,
+                            add_special_tokens=True,
+                            padding=True)
+          translations = model.generate(**inputs)
+          translated_text = tokenizer.decode(
+              translations[0],
+              skip_special_tokens=True,
+              clean_up_tokenization_spaces=False,
+              spaces_between_special_tokens=False
+          )
         segment['translated_text'] = translated_text
         cnt += 1
         if config.verbose : log(f"{cnt}/{total_segments}: {segment_text.strip()} ⏩⏩⏩ {translated_text.strip()}")
