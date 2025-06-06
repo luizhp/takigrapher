@@ -1,5 +1,5 @@
 import os
-from utils.log import log
+from utils.log import log, print_progress_bar
 from models.transcription import Transcription
 from transformers import MarianMTModel, MarianTokenizer
 
@@ -15,6 +15,8 @@ def translate_text_offline(config : Transcription, model_name: str, text_origina
     if tokenizer is None or model is None:
         return None
     
+    cnt = 0
+    total_segments = len(text_original['segments'])
     for segment in text_original['segments']:
         if segment['text'] is None:
             log("No text found in the segment for translation.")
@@ -34,9 +36,10 @@ def translate_text_offline(config : Transcription, model_name: str, text_origina
             spaces_between_special_tokens=False
         )
         segment['translated_text'] = translated_text
+        cnt += 1
         if config.verbose : log(f"{segment_text.strip()} ⏩⏩⏩ {translated_text.strip()}")
-        # todo: add progress bar
-        else : print("░", end='', flush=True)
+        else : 
+           print_progress_bar(cnt, total_segments, length=20)
 
     return text_original
 
