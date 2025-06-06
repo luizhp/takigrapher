@@ -19,8 +19,8 @@ def process_media(config : Transcription, media_files: list):
         return
     log(f"Model loaded: {config.model_name}")
 
-    for media_file_path in media_files:
-
+    for ntx, media_file_path in enumerate(media_files):
+        log(f"Processing media file {ntx + 1}/{len(media_files)}")
         # Transcribe media file
         text_transcription : tuple[str, str] = transcribe_media(config, media_file_path)
         if text_transcription is None:
