@@ -1,0 +1,37 @@
+# Ignorar arquivos e diretórios relacionados ao Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Ignorar arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos temporários de áudio
+*.wav
+
+# Ignorar arquivos de saída gerados
+*.lrc
+
+# Ignorar ambiente virtual e arquivos de configuração locais
+venv/
+.env/
+.env
+
+# Ignorar configurações de IDE
+.vscode/
+.idea/
+
+# Ignorar diretórios específicos do projeto
+media/*
+!media/sample.mp3
+data/
+
+# Ignorar arquivos do Git
+.git/
+.gitignore
