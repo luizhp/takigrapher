@@ -44,8 +44,8 @@ def process_media(config : Transcription, media_files: list):
         if config.targetlanguage is not None:
             # Check if the source language is set
             if config.sourcelanguage is None:
-                log("Source language not set. Cannot translate.")
-                continue
+                log(f"Source language not set. Assuming detected language: {detected_language} as source language.")
+                config.sourcelanguage = detected_language
             if not config.targetlanguage == config.sourcelanguage:
               # Translate text
               log(f"Translating to {config.targetlanguage}")
@@ -59,43 +59,53 @@ def process_media(config : Transcription, media_files: list):
         # Convert transcription/translation to the desired format
         target_text = text_translated if text_translated is not None else text_transcription
         target_text_type = 'translation' if text_translated is not None else 'transcription'
-        text_transformed : str = transform_media(config, target_text, target_text_type)
+        json_transformed : str = transform_media(config, target_text, target_text_type)
 
-        # Output transformed text to a file
-        """
-        The output file will be saved in the same directory as the media file, with the same base name.
-        The source language can be specified or it will be detected automatically.
-        The output file can be named <base_name>_<source_language>_<rename>.<target_type>.
-        """
-        src_lng = ""if config.sourcelanguage is None else f".{config.sourcelanguage}"
-        src_lng = ""if not config.targetsuffix else f"{src_lng}"
-        tgt_lng = ""if config.targetlanguage is None else f".{config.targetlanguage}"
-        tgt_lng = ""if not config.targetsuffix else f"{tgt_lng}"
-        lng = tgt_lng if tgt_lng else src_lng
-        file_path_alongside_media = os.path.splitext(media_file_path)[0] + lng + f".{config.targettype}"
-        tgt_abs_file_path = os.path.abspath(file_path_alongside_media)
+        jobExport = []
+        if config.exportall:
+            if target_text_type == 'translation': jobExport.append('translation')
+            jobExport.append('transcription')
+        else:
+            if config.targetlanguage is not None: jobExport.append('translation')
+            else: jobExport.append('transcription')
 
-        # Check if the output file already exists
-        match config.targetexists:
-            case 'skip':
-                if os.path.exists(tgt_abs_file_path):
-                    log(f"Skipping existing file: {tgt_abs_file_path}")
-                    return
-            case 'rename':
-                base, ext = os.path.splitext(tgt_abs_file_path)
-                i = 0
-                while os.path.exists(tgt_abs_file_path):
-                    i += 1
-                    tgt_abs_file_path = f"{base}_{i}{ext}"
-                if i > 0:
-                    log(f"Avoiding collision by renaming existing file to: {tgt_abs_file_path}")
-            case 'overwrite':
-                if os.path.exists(tgt_abs_file_path):
-                  log(f"Overwriting existing file: {tgt_abs_file_path}")
-                pass
+        for job in jobExport:
+            if config.exportall:
+                if job == 'translation':
+                    lng = config.targetlanguage
+                elif job == 'transcription':
+                    lng = detected_language if config.sourcelanguage is None else config.sourcelanguage
+            else:
+                src_lng = detected_language if config.sourcelanguage is None else f"{config.sourcelanguage}"
+                src_lng = ""if not config.targetsuffix else f"{src_lng}"
+                tgt_lng = ""if config.targetlanguage is None else f"{config.targetlanguage}"
+                tgt_lng = ""if not config.targetsuffix else f"{tgt_lng}"
+                lng = tgt_lng if tgt_lng else src_lng
 
-        log("Writing to file...")
-        with open(tgt_abs_file_path, 'w', encoding='utf-8') as f:
-            for line in text_transformed:
-                f.write(line)
-        log(f"File written: {tgt_abs_file_path}")
+            file_path_alongside_media = os.path.splitext(media_file_path)[0] + f".{lng}" + f".{config.targettype}"
+            tgt_abs_file_path = os.path.abspath(file_path_alongside_media)
+
+            # Check if the output file already exists
+            match config.targetexists:
+                case 'skip':
+                    if os.path.exists(tgt_abs_file_path):
+                        log(f"Skipping existing file: {tgt_abs_file_path}")
+                        return
+                case 'rename':
+                    base, ext = os.path.splitext(tgt_abs_file_path)
+                    i = 0
+                    while os.path.exists(tgt_abs_file_path):
+                        i += 1
+                        tgt_abs_file_path = f"{base}_{i}{ext}"
+                    if i > 0:
+                        log(f"Avoiding collision by renaming existing file to: {tgt_abs_file_path}")
+                case 'overwrite':
+                    if os.path.exists(tgt_abs_file_path):
+                      log(f"Overwriting existing file: {tgt_abs_file_path}")
+                    pass
+
+            log("Writing to file...")
+            with open(tgt_abs_file_path, 'w', encoding='utf-8') as f:
+                for line in json_transformed[job]:
+                    f.write(line)
+            log(f"File written: {tgt_abs_file_path}")

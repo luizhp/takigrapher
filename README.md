@@ -57,6 +57,7 @@ options:
   -te [ACTION], --targetexists [ACTION]
                         available actions: overwrite, skip, rename. (Default: skip)
   -ts, --targetsuffix   add suffix to target file name. (Default: false)
+  -ea, --exportall      export original and translated text together as target files. (Default: false)
 
 Example usage:
 python3 src/main.py --media ./media/sample.mp3 --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en

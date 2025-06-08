@@ -13,4 +13,5 @@ class Transcription:
     targetsuffix: bool = False
     media_path: str = "./media"
     model_name: str = "tiny"
+    exportall: bool = False
     model: object = None

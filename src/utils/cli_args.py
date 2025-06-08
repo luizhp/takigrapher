@@ -140,6 +140,14 @@ turbo: Fastest variant, high accuracy, resource-efficient.""",
                         help="add suffix to target file name. (Default: false)",
                         default=False)
 
+    parser.add_argument("-ea","--export-all",
+                        dest="exportall",
+                        action="store_true",
+                        required=False,
+                        help="export original and translated text together as target files. (Default: false)",
+                        default=False)
+
+
     args = parser.parse_args()
 
     config = Transcription()
@@ -154,5 +162,6 @@ turbo: Fastest variant, high accuracy, resource-efficient.""",
     config.targettype = args.targettype
     config.targetexists = args.targetexists
     config.targetsuffix = args.targetsuffix
+    config.exportall = args.exportall
 
     return config
