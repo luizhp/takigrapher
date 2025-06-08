@@ -21,20 +21,20 @@ def transform_media(config : Transcription, transcription: tuple[str, str], text
         return None
 
     transformed_content : str = None
-    text_tag = 'translated_text' if text_type == 'translation' else 'text'
+    text_tag = 'translations' if text_type == 'translation' else 'segments'
 
-    if 'segments' in transcription:
+    if text_tag in transcription:
       match config.targettype:
           case 'lrc':
-              transformed_content = segments2lrc(transcription['segments'], text_tag)
+              transformed_content = segments2lrc(transcription[text_tag])
           case 'txt':
-              transformed_content = segments2txt(transcription['segments'], text_tag)
+              transformed_content = segments2txt(transcription[text_tag])
           case 'srt':
-              transformed_content = segments2srt(transcription['segments'], text_tag)
+              transformed_content = segments2srt(transcription[text_tag])
           case 'vtt':
-              transformed_content = segments2vtt(transcription['segments'], text_tag)
+              transformed_content = segments2vtt(transcription[text_tag])
           case 'json':
-              transformed_content = segments2json(transcription['segments'], text_tag)
+              transformed_content = segments2json(transcription[text_tag])
 
     if transformed_content == []:
         log(f"ERROR: Transcription could not be converted to {config.targettype}: no segments found")
