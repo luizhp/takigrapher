@@ -24,6 +24,7 @@ def transcribe_media(config : Transcription, media_file_path: str) -> tuple[str,
     if config.verbose: log("⏺️ Start ⏺️")
     try:
         result : tuple[str, str] = config.model.transcribe(audio=abs_media_file_path,
+                                                           task="transcribe",
                                                            language=config.sourcelanguage,
                                                            verbose=config.verbose,
                                                            word_timestamps=True)
