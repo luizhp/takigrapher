@@ -11,15 +11,16 @@ def process_media(config : Transcription, media_files: list):
     """
     Processes a list of media files, performing transcription, translation, or other actions as configured.
     """
-    # Load model
-    log("Loading Whisper model (it can take some time)")
-    config.model = load_whisper_model(config)
-    if config.model is None:
-        log(f"Failed to load model: {config.model_name}")
-        return
-    log(f"Model loaded: {config.model_name}")
 
     for ntx, media_file_path in enumerate(media_files):
+        # Load model
+        log(f"Loading Whisper model: {config.model_name}")
+        config.model = load_whisper_model(config)
+        if config.model is None:
+            log(f"Failed to load model: {config.model_name}")
+            return
+        log(f"Model loaded: {config.model_name}")
+
         log(f"Processing media file {ntx + 1}/{len(media_files)}")
         # Transcribe media file
         text_transcription : tuple[str, str] = transcribe_media(config, media_file_path)
