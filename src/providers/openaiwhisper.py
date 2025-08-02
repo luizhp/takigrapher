@@ -15,8 +15,8 @@ def load_whisper_model(config: Transcription):
                 device = "cpu"
         else:
             device = "cuda" if torch.cuda.is_available() else "cpu"
-        log(f"Using device: {'gpu' if device == 'cuda' else device}")
-        log(f"Loading Whisper model: {config.model_name}")
+        if config.verbose:
+          log(f"Using device: {'gpu' if device == 'cuda' else device}")
         model = whisper.load_model(config.model_name,
                                    device=device,
                                    in_memory=config.inmemory)
