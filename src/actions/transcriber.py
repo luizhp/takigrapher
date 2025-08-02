@@ -3,26 +3,35 @@ import subprocess
 from utils.log import log
 from models.transcription import Transcription
 
-def count_audio_tracks(filename):
+def count_audio_tracks(config: Transcription, filename):
     cmd = [
         "ffprobe", "-v", "error", "-select_streams", "a",
         "-show_entries", "stream=index", "-of", "csv=p=0", filename
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
+    if config.verbose:
+        log(f"[Running command: {' '.join(cmd)}]")
+        log(f"[Command stdout: {result.stdout.strip()}]")
+        log(f"[Command stderr: {result.stderr.strip()}]")
     return len(result.stdout.strip().splitlines())
 
-def extract_audio_track(input_path: str, output_path: str, track: int):
+def extract_audio_track(config: Transcription, input_path: str, output_path: str, track: int):
     """
     Extracts the specified audio track (1=first, 2=second, 3=third, etc) from a media file using ffmpeg.
     """
-    ffmpeg_cmd = [
+    cmd = [
         "ffmpeg",
         "-y",
         "-i", input_path,
         "-map", f"0:{track}",  # track=1 para 0:1, track=2 para 0:2, etc.
         output_path
     ]
-    subprocess.run(ffmpeg_cmd, check=True)
+    result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+    if config.verbose:
+        log(f"[Running command: {' '.join(cmd)}]")
+        log(f"[Command stdout: {result.stdout.strip()}]")
+        log(f"[Command stderr: {result.stderr.strip()}]")
+
 
 def transcribe_media(config: Transcription, media_file_path: str, audio_track: int = 1) -> tuple[str, str]:
     """
@@ -33,7 +42,7 @@ def transcribe_media(config: Transcription, media_file_path: str, audio_track: i
     abs_media_file_path = os.path.abspath(media_file_path)
     temp_track_file = None
 
-    audio_tracks_qty = count_audio_tracks(abs_media_file_path)
+    audio_tracks_qty = count_audio_tracks(config, abs_media_file_path)
     if audio_tracks_qty == 0:
         log(f"ERROR: No audio tracks found in {abs_media_file_path}")
         return None
@@ -44,7 +53,7 @@ def transcribe_media(config: Transcription, media_file_path: str, audio_track: i
     if audio_track > 1:
         log(f"Extracting track {audio_track} from {abs_media_file_path}")
         temp_track_file = abs_media_file_path + f".track{audio_track}.wav"
-        extract_audio_track(abs_media_file_path, temp_track_file, track=audio_track)
+        extract_audio_track(config, abs_media_file_path, temp_track_file, track=audio_track)
         abs_media_file_path = temp_track_file
 
     # Check if the media file exists
