@@ -67,8 +67,11 @@ python3 src/main.py --media ./media/sample.mp3 --modelname tiny --device cuda --
 
 #### Setup
 ```sh
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+
+source .venv/bin/activate # Linux/macOS
+# .\venv\Scripts\activate # Windows
+
 pip3 install -r requirements.txt
 ```
 
@@ -77,8 +80,11 @@ pip3 install -r requirements.txt
 # base model without in-memory
 python3 src/main.py -v -m ./media/sample.mp3 -n base.en -tt lrc -te overwrite
 
-# lager model with in-memory model
+# larger model with in-memory model
 python3 src/main.py -v -m ./media/sample.mp3 -n large -im -sl en -tt lrc -te overwrite -ts
+
+# transcribe a specific audio track
+python3 src/main.py -v -m ./media/sample3trk.mp4 -n medium.en -sl en -tt lrc -te overwrite -t 2
 ```
 
 ### Docker

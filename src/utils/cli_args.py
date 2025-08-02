@@ -147,6 +147,13 @@ turbo: Fastest variant, high accuracy, resource-efficient.""",
                         help="export original and translated text together as target files. (Default: false)",
                         default=False)
 
+    parser.add_argument("-t","--track",
+                        dest="track",
+                        action="store",
+                        required=False,
+                        type=lambda x: int(x) if int(x) > 0 else parser.error("track must be a positive integer"),
+                        help="extract audio track (1=first, 2=second, 3=third, etc). (Default: 1)",
+                        default=1)
 
     args = parser.parse_args()
 
@@ -163,5 +170,6 @@ turbo: Fastest variant, high accuracy, resource-efficient.""",
     config.targetexists = args.targetexists
     config.targetsuffix = args.targetsuffix
     config.exportall = args.exportall
+    config.track = args.track
 
     return config

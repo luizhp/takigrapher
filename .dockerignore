@@ -20,6 +20,7 @@ Thumbs.db
 
 # Ignorar ambiente virtual e arquivos de configuração locais
 venv/
+.venv/
 .env/
 .env
 
@@ -30,6 +31,7 @@ venv/
 # Ignorar diretórios específicos do projeto
 media/*
 !media/sample.mp3
+!media/sample3trk.mp4
 data/
 
 # Ignorar arquivos do Git

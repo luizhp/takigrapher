@@ -23,7 +23,7 @@ def process_media(config : Transcription, media_files: list):
 
         log(f"Processing media file {ntx + 1}/{len(media_files)}")
         # Transcribe media file
-        text_transcription : tuple[str, str] = transcribe_media(config, media_file_path)
+        text_transcription : tuple[str, str] = transcribe_media(config, media_file_path, config.track)
         if text_transcription is None:
             log(f"Failed to transcribe media file: {media_file_path}")
             break
@@ -83,7 +83,7 @@ def process_media(config : Transcription, media_files: list):
                 tgt_lng = ""if not config.targetsuffix else f"{tgt_lng}"
                 lng = tgt_lng if tgt_lng else src_lng
 
-            file_path_alongside_media = os.path.splitext(media_file_path)[0] + f".{lng}" + f".{config.targettype}"
+            file_path_alongside_media = os.path.splitext(media_file_path)[0] + (f".{lng}" if lng else "") + f".{config.targettype}"
             tgt_abs_file_path = os.path.abspath(file_path_alongside_media)
 
             # Check if the output file already exists

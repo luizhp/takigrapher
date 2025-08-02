@@ -20,6 +20,7 @@ Thumbs.db
 
 # Ambiente virtual
 venv/
+.venv/
 .env/
 .env
 
@@ -29,5 +30,6 @@ venv/
 
 media/*
 !media/sample.mp3
+!media/sample3trk.mp4
 
 data/

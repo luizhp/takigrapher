@@ -15,3 +15,4 @@ class Transcription:
     model_name: str = "tiny"
     exportall: bool = False
     model: object = None
+    channel: int = 1
