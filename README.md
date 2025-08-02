@@ -58,7 +58,8 @@ options:
                         available actions: overwrite, skip, rename. (Default: skip)
   -ts, --targetsuffix   add suffix to target file name. (Default: false)
   -ea, --exportall      export original and translated text together as target files. (Default: false)
-
+  -t TRACK, --track TRACK
+                        extract audio track (1=first, 2=second, 3=third, etc). (Default: 1)
 Example usage:
 python3 src/main.py --media ./media/sample.mp3 --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en
 ```
