@@ -47,7 +47,11 @@ def transcribe_media(config: Transcription, media_file_path: str, audio_track: i
             task="transcribe",
             language=config.sourcelanguage,
             verbose=config.verbose,
-            word_timestamps=True
+            word_timestamps=True,
+            beam_size=config.beam_size,
+            best_of=config.best_of,
+            temperature=config.temperature,
+            prompt=config.prompt
         )
     except Exception as e:
         log(f"ERROR: Transcription failed {abs_media_file_path}: {e}")

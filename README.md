@@ -57,9 +57,19 @@ options:
   -te [ACTION], --targetexists [ACTION]
                         available actions: overwrite, skip, rename. (Default: skip)
   -ts, --targetsuffix   add suffix to target file name. (Default: false)
-  -ea, --exportall      export original and translated text together as target files. (Default: false)
+  -ea, --exportall      export original and translated text together as target files.
+                        (Default: false)
   -t TRACK, --track TRACK
                         extract audio track (1=first, 2=second, 3=third, etc). (Default: 1)
+  --temperature [TEMP]  Temperature for transcription sampling (0.0 to 1.0).
+                        Lower values increase determinism, higher values increase variability. (Default: 0.0)
+  --beam-size [SIZE]    Number of hypotheses considered during decoding (1 to 20).
+                        Higher values increase accuracy but slow down processing. (Default: 5)
+  --best-of [N]         Number of transcription samples to compare (1 to 10).
+                        Higher values improve accuracy but increase processing time. (Default: 5)
+  --prompt [TEXT]       Initial text to guide transcription (e.g., context or
+                        keywords). (Default: None)
+
 Example usage:
 python3 src/main.py --media ./media/sample.mp3 --modelname tiny --device cuda --verbose --sourcetype mp3 --sourcelanguage en --targetlanguage en
 ```
@@ -86,6 +96,9 @@ python3 src/main.py -v -m ./media/sample.mp3 -n large -im -sl en -tt lrc -te ove
 
 # transcribe a specific audio track
 python3 src/main.py -v -m ./media/sample3trk.mp4 -n medium.en -sl en -tt lrc -te overwrite -t 2
+
+# transcribe a specific audio track with different settings
+python3 src/main.py -v -m ./media/sample3trk.mp4 -n base.en -sl en -tt lrc -te overwrite -t 2 --temperature 0.2 --beam-size 7 --best-of 5 --prompt "transcribe the voice"
 ```
 
 ### Docker
