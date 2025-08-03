@@ -1,6 +1,6 @@
-from utils.log import log
-from models.transcription import Transcription
-from providers.marianmt import translate_text_offline
+from utils import log
+from models import Transcription
+from providers import translate_text_offline
 
 def translate_media(config : Transcription, text_original: tuple[str, str]) -> tuple[str, str]:
     """

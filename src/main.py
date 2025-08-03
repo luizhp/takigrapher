@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
-from utils.log import log
-from utils.suppress_warnings import suppress_warnings
-from utils.files import list_media_files
-from utils.cli_args import parse_args_and_build_config
-from actions import process_media
+from utils import log, suppress_warnings, list_media_files, parse_args_and_build_config
+from worker import process_media
 
 def main():
 

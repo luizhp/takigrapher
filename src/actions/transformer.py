@@ -1,10 +1,6 @@
-from models.transcription import Transcription
-from formatters.lrc import segments2lrc
-from formatters.srt import segments2srt
-from formatters.vtt import segments2vtt
-from formatters.json import segments2json
-from formatters.txt import segments2txt
-from utils.log import log
+from utils import log
+from models import Transcription
+from formatters import segments2lrc, segments2srt, segments2vtt, segments2json, segments2txt
 
 def transform_media(config : Transcription, transcription: tuple[str, str], text_type: str) -> dict:
     

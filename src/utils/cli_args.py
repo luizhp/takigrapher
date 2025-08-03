@@ -1,6 +1,6 @@
 import argparse
 import whisper
-from models.transcription import Transcription
+from models import Transcription
 
 def parse_args_and_build_config():
     parser = argparse.ArgumentParser(

@@ -1,5 +1,6 @@
 import os
-from utils.log import log
+import subprocess
+from utils import log
 
 def list_media_files(path: str, sourcetype: str = None) -> list:
     """
@@ -36,3 +37,25 @@ def list_media_files(path: str, sourcetype: str = None) -> list:
 
     media_files.sort()
     return media_files
+
+def count_audio_tracks(filename):
+    cmd = [
+        "ffprobe", "-v", "error", "-select_streams", "a",
+        "-show_entries", "stream=index", "-of", "csv=p=0", filename
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    return len(result.stdout.strip().splitlines())
+
+def extract_audio_track(input_path: str, output_path: str, track: int):
+    """
+    Extracts the specified audio track (1=first, 2=second, 3=third, etc) from a media file using ffmpeg.
+    """
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i", input_path,
+        "-map", f"0:{track}",  # track=1 para 0:1, track=2 para 0:2, etc.
+        output_path
+    ]
+    result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+    return f"{result.stdout.strip()}\n{result.stderr.strip()}"

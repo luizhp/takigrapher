@@ -1,6 +1,6 @@
 import os
-from utils.log import log, print_progress_bar
-from models.transcription import Transcription
+from utils import log, print_progress_bar
+from models import Transcription
 from transformers import MarianMTModel, MarianTokenizer
 from datetime import datetime
 

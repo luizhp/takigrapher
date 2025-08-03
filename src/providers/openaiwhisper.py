@@ -1,6 +1,6 @@
 import whisper  # openai-whisper
-from models.transcription import Transcription
-from utils.log import log
+from models import Transcription
+from utils import log
 
 def load_whisper_model(config: Transcription):
     """
