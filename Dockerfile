@@ -6,7 +6,7 @@ ENV PYTHONUNBUFFERED=1 PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 # Metadata
 LABEL maintainer="luizhp <luizhp@yahoo.com>"
 LABEL description="Dockerfile for OpenAi Whisper ASR with CUDA support"
-LABEL version="0.0.13"
+LABEL version="0.0.14"
 LABEL repository="https://github.com/luizhp/takigrapher"
 LABEL homepage="https://github.com/luizhp/takigrapher"
 LABEL license="GPLv3"
